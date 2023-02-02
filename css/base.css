@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #e33333;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    bottom: 0;
+    width: 100%;
+    vertical-align: center;
+}

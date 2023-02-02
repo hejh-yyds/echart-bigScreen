@@ -1,0 +1,683 @@
+body {
+    // 背景大图
+    
+    background-image: url(../images/bg.jpg);
+    background-repeat: no-repeat;
+    // 占满整个屏幕
+    background-size: cover;
+}
+
+
+// 定义一个动画
+
+// 监控区域数据的滚动
+@keyframes move {
+    0%{
+
+    }100%{
+        transform:translateY(-50%);
+    }
+}
+
+// 胶囊字体图标
+.square::before{
+    content: '';
+    display: inline-block;
+    width: .1rem;
+    height: .2rem;
+    border-radius: .1rem;
+    background-color: greenyellow;
+}
+
+
+// 边框图片
+// 边框有宽度，且各方向宽度不同
+.panel{
+    position: relative;
+    border: 15px solid red;
+    // 边框图片的被切去四角的宽度，
+    border-width: .6375rem .475rem .25rem 1.65rem;
+
+    // 边框图片
+    border-image-source: url(../images/border.png);
+
+    // 边框九宫格实现
+    border-image-slice: 51 38 20 132;
+}
+
+
+/* 
+
+    因为边框图片四角有宽度，且宽度各不同，需要使用自绝父相定位，
+    使子盒子inner拉绳至父元素的大小
+*/
+// inner盒子，拉伸
+
+.inner{
+    position: absolute;
+    // 拉升到父元素的宽度
+    top: -0.6375rem;
+    left: -1.65rem;
+    right: -0.475rem;
+    bottom: -0.25rem;
+    padding: .3rem .45rem;
+}
+
+/* 父容器 */
+
+// 整体的大容器，居中对齐
+.viewport {
+    min-width: 1024px;
+    max-width: 1920px;
+    // 顶部logo
+    background-image: url(../images/logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 1.1rem 0.25rem 0 0.25rem;
+    min-height: 780px;
+    // max-height: 1024px;
+    margin: 0 auto;
+    // 将整体分为3部分，从左到右
+    display: flex;
+    justify-content: space-between;
+
+
+    // 左边部分
+    .left {
+        flex: 2;
+
+        // 概览区域
+        .overview{
+            // background-color: skyblue;
+            height: 1.25rem;
+            margin-bottom: .25rem;
+
+            ul{
+                display: flex;
+                justify-content: space-between;
+
+                h4{
+                    font-weight: 400;
+                    color: #fff;
+                    text-align: center;
+                    font-size: .275rem;
+                }
+
+                span{
+                    font-size: .2rem;
+                    color: skyblue;
+                }
+
+                li{
+                    &:first-child{
+                        .square::before{
+                            background-color: rgb(1,99,251);
+                        }
+                    }
+
+                    &:last-child{
+                        .square::before{
+                            background-color: red;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 监控区域
+        .monitor{
+            // background-color: skyblue;
+            height: 6.25rem;
+            margin-bottom: .25rem;
+
+            .tab{
+                color: #fff;
+                margin-bottom: .25rem;
+
+                span{
+                    font-size: .25rem;
+                    cursor: pointer;
+
+                    &:hover{
+                        color: skyblue;
+                    }
+
+                
+                }
+
+                .active{
+                    color: skyblue;
+                }
+            }
+
+            
+            // table栏切换的内容滚动区域
+
+            .head1,
+            .head2{
+                position: relative;
+                
+                .title{
+                    font-size: .2rem;
+                    display: flex;
+                    justify-content: space-between;
+                    
+                }
+                // 背景遮罩，底色
+                .mask{
+                    left: -0.45rem;
+                    top: -0.15rem;
+                    right: -0.45rem;
+                    bottom: -0.15rem;
+                    // width: 100%;
+                    height: .625rem;
+                    position: absolute;
+                    background-color:rgba(255, 255, 255, 0.2);
+                }
+                
+                color: skyblue;
+
+                // 需要滚动的盒子，实现无缝滚动
+                .content{
+                    height: 4.5625rem;
+                    overflow: hidden;
+                    margin-top: .22rem;
+                    ul{
+                        
+                        animation: move 7s linear infinite;
+                        // height: 200%;
+                        // ps
+                        // background-color: pink;
+                        
+                        li{
+                            display: flex;
+                            // width: 0;
+                            justify-content: space-between;
+                            // ps
+                            // background-color: blue;
+                            font-size: .175rem;
+                            height: .45rem;
+                            color: #fff;
+
+                            // 隐藏多余的文字为...
+                            span:nth-of-type(2){
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                width: 2.5rem;
+                            }
+                        }
+                    }
+
+                    
+                }
+
+                // 摸上去，停止滚动
+                .content:hover{
+                    ul{
+                        animation-play-state: paused;
+                    }
+                }
+
+                
+            }
+
+            // 默认显示故障编号
+            .head2{
+                display: none;
+            }
+
+            
+        }
+
+        // 点位区域
+        .points{
+            position: relative;
+            // background-color: skyblue;
+            height: 4.4rem;
+
+            h3{
+                color: #fff;
+            }
+
+            // 图片部分
+            .pic{
+                display: flex;
+                justify-content: space-between;
+            }
+
+            // 饼状图
+            .acharts{
+                // position: absolute;
+                width: 3.4rem;
+                height: 3rem;
+                // padding: 0;
+                // margin-top: .9rem;
+                // margin-left: .25rem;
+                // left: -0.45rem;
+                // top: -0.3rem;
+                // top: -0.3rem;
+
+                // width: 3rem;
+                // height: 3rem;
+            }
+
+            // 饼状图右侧内容
+            .info{
+                border-radius: 0 .25rem 0 .25rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                width: 2rem;
+                height: 3rem;
+                // background-color: rgba(140, 140, 221, 0.8);
+                background: url(../images/rect.png);
+
+                span{
+                    color:skyblue;
+                };
+            }
+        }
+    }
+
+    // 中间部分
+    .main {
+        flex: 3;
+
+        // margin: .25rem;
+        margin: .5rem .25rem 0rem .25rem;
+
+        .location{
+            // background-color: skyblue;
+            height: 7.1875rem;
+            margin-bottom: .25rem;
+
+            .geo{
+                height: 6.875rem;
+            }
+            
+            color: #fff;
+
+            span{
+                // display: inline-block;
+                font-size: .25rem;
+                
+            }
+
+            >h3{
+                font-size: .25rem;
+                font-weight: 400;
+            }
+
+            
+        }
+
+        // 下方柱状图部分
+        .user{
+            height: 4.5rem;
+            // background-color: skyblue;
+
+            h3{
+                color: #fff;
+                font-weight: 400;
+                font-size: .25rem;
+            }
+
+            .pic{
+                display: flex;
+                justify-content: space-between;
+            }
+
+            // 柱状图
+            .chart{
+                width: 6.25rem;
+                height: 4rem;
+            }
+            // 柱状图右侧内容部分
+            .info{
+                color: #fff;
+                border-radius: 0 .25rem 0 .25rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                width: 2.5rem;
+                height: 3rem;
+                // background-color: rgba(140, 140, 221, 0.8);
+                background: url(../images/rect.png);
+
+                span{
+                    color:skyblue;
+                }
+
+                h3{
+                    font-size: .25rem;
+                    font-weight: 400;
+                }
+
+                .usercnt{
+                    i::before{
+                        background-color: red;
+                    }
+                }
+
+                .incre{
+                    i::before{
+                        background-color: yellow;
+                    }
+                }
+            }
+        }
+
+    }
+
+    // 右侧部分
+    .right {
+        flex: 2;
+
+        // 订单区域
+        .order{
+            // background-color: skyblue;
+            height: 1.75rem;
+            margin-bottom: .25rem;
+
+            // 时间的tab栏切换
+            .tab-time{
+                color: skyblue;
+                .time{
+                    display: flex;
+                    width: 3.75rem;
+                    justify-content: space-between;
+                    margin-bottom: .125rem;
+                    li{
+                        font-size: .225rem;
+                        cursor: pointer;
+                        &:hover{
+                            color: #fff;
+
+                        }
+
+                        &.active{
+                            color: #fff;
+                        }
+                    }
+
+                    
+                }
+
+                // 订单详情
+                .content{
+                    
+                    width: 3.75rem;
+                    // display: flex;
+                    justify-content: space-between;
+                    h3{
+                        color: #fff;
+                        font-size: .275rem;
+                        font-weight: 400;
+                        text-align: center;
+                    }
+
+                    span.square::before{
+                        width: .075rem;
+                        height: .15rem;
+                        
+                    }
+
+                    span{
+                        font-size: .175rem;
+                    }
+
+                    .salecnt{
+                        span.square::before{
+                            background-color: red;
+                        }
+                    }
+
+                    display: none;
+
+                    
+                }
+
+                .content.current{
+                    display: flex;
+                }
+            }
+
+        }
+
+        // 订单折线图部分
+        .sale{
+            // background-color: skyblue;
+            height: 3.125rem;
+            margin-bottom: .25rem;
+
+            .header{
+                display: flex;
+                color: skyblue;
+                align-items: center;
+                h3{
+                    color: #fff;
+                    font-size: .275rem;
+                    font-weight: 400;
+                    
+                }
+
+                .h-season{
+                    display: flex;
+                    width: 1.875rem;
+                    justify-content: space-between;
+
+                    li{
+                        width: .3rem;
+                        height: .3rem;
+                        font-size: .225rem;
+                        text-align: center;
+                        cursor: pointer;
+                        &.active{
+                            color: #fff;
+                            background-color: rgb(59, 200, 255);
+                        }
+                    }
+                }
+
+                
+            }
+
+            // 折线图
+            .chart{
+                height: 2.1875rem;
+                // background-color: pink;
+            }
+
+        }
+
+        // 销售渠道
+        .saleroad{
+            margin-bottom: .25rem;
+
+            // background-color: skyblue;
+            height: 3.125rem;
+            display: flex;
+            justify-content: space-between;
+           
+            div.road{
+                margin-right: .25rem;
+                flex: 4;
+                color: #fff;
+                h3{
+                    font-size: .25rem;
+                    font-weight: 400;
+
+                }
+
+                // 雷达图
+                .chart{
+                    height: 2.1875rem;
+                    // background-color: pink;
+                }
+            }
+
+            div.season{
+                position: relative;
+                flex: 5;
+
+                color: #fff;
+                h3{
+                    font-size: .25rem;
+                    font-weight: 400;
+                }
+
+                h2{
+                    transform: translateY(-310%);
+                    font-weight: 400;
+                    text-align: center;
+                }
+
+                .info{
+                    transform: translateY(-200%);
+                    // left: 0;
+                    // top: 50%;
+                    // position: absolute;
+                    display: flex;
+                    justify-content: space-between;
+                    span{
+                        font-size: .15rem;
+
+                        
+                    }
+
+                    span.square{
+                        &::before{
+                            width: .075rem;
+                            height: .15rem;
+                        }
+                    }
+
+                    .incre{
+                        span.square::before{
+                            background-color: red;
+                        }
+                    }
+                }
+
+                // 半圆形饼图
+                .chart{
+                    height: 2.1875rem;
+                    // background-color: pink;
+                }
+            }
+
+        }
+
+        // 排行榜
+        .rank{
+            // background-color: skyblue;
+            height: 3.75rem;
+
+            color: #fff;
+            .r-header{
+                margin-bottom: .25rem;
+                display: flex;
+                justify-content: space-between;
+                h3{
+                    font-size: .25rem;
+                    font-weight: 400;
+
+                    &:nth-of-type(2){
+                        margin-left: -0.875rem;
+                    }
+                }
+
+                p{
+                    margin-top: .125rem;
+                    font-size: .15rem;
+                    color: #4c9bfd;
+                }
+
+
+            }
+
+            .infos{
+                
+                display: flex;
+                justify-content: space-between;
+                .all ul,
+                .province ul,
+                .province2 ul{
+                    height: 2.5rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+
+                .all{
+                    font-size: .225rem;
+                    color: #4c9bfd;
+                    flex: 1;
+
+                    ul{
+                        padding-bottom: .125rem;
+                    }
+                }
+
+                .province{
+                    margin-top: -0.125rem;
+                    font-size: .2rem;
+                    // margin-left: -0.25rem;
+                    color: #4c9bfd;
+                    flex: 1;
+                    li{
+                        padding: .025rem;
+                        height: .375rem;
+                        // width: 2.5rem;
+                        text-align: center;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+
+                        &:hover{
+                            background-color: rgba(10, 67, 188, 0.2)
+                        }
+                        &.active{
+                            background-color: rgba(10, 67, 188, 0.2)
+
+                        }
+                    }
+                    padding: .0875rem;
+
+                }
+
+                .province2{
+                    margin-left: -0.0875rem;
+                    color: skyblue;
+                    margin-top: -0.125rem;
+                    font-size: .2rem;
+                    background-image: url(../images/rect.png);
+                    flex: 1;
+                    padding: .0875rem;
+
+                    li{
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    ul{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        // display: none;
+                    }
+                }
+            }
+
+            
+        }
+
+
+    }
+}
+
+
+
